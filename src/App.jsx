@@ -28,7 +28,18 @@ function App() {
           <Route path="/product/:id" element={<ProductDetail/>}/>
         </Routes>
       </Router>
-      <Toaster />
+      <Toaster
+      toastOptions={
+        {
+          success: {
+            iconTheme: {
+              primary: 'black',
+              secondary: 'white',
+            },
+          },
+        }
+      }
+       />
     </>
   );
 }
