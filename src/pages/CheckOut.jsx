@@ -3,8 +3,25 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
 import { useAddOrderMutation } from "../components/rtk/features/Apis/OrderApi";
+import { useLipaNaMpesaMutation } from "../components/rtk/features/Apis/MpesaApi";
 import {jwtDecode} from 'jwt-decode';
 import toast from "react-hot-toast";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 function CheckOut({ accessToken }) {
   const { cartItems, cartTotalAmount } = useSelector((state) => state.cart);
@@ -12,8 +29,21 @@ function CheckOut({ accessToken }) {
   const [userId, setUserId] = useState('');
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
+  const [open, setOpen] = useState(false);
+  const [phone, setPhone] = useState('');
   const [addOrder, { isLoading, error, data }] = useAddOrderMutation();
+  const [lipaNaMpesa, { isLoading: isMpesaLoading, error: mpesaError, data: mpesaData }] = useLipaNaMpesaMutation();
 
+
+  const handleOpen = () => {
+    setOpen(true);
+    setPaymentMethod('m-pesa');
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setPaymentMethod('');
+  };
 
   useEffect(() => {
     if (accessToken) {
@@ -50,6 +80,15 @@ function CheckOut({ accessToken }) {
     setPaymentMethod(e.target.value)
   }
 
+  const handleMpesaPayment = (e) => {
+    e.preventDefault();
+    const payload = {
+      phone_number: phone,
+      amount: accumulativeTotal,
+    };
+    lipaNaMpesa(payload);
+  };
+
 
 
   const handleSubmit = (e) => {
@@ -74,6 +113,16 @@ if(error){
 } else if (data) {
   toast.success(`${data.message}`)
 }
+
+  if (mpesaError) {
+    toast.error(`${mpesaError.status}`)
+  } else if (mpesaData) {
+    toast.success(`${mpesaData.message}`)
+    handleClose();
+    // handleSubmit();
+  }
+  console.log(mpesaError)
+  console.log(mpesaData)
 
 
 
@@ -287,7 +336,7 @@ if(error){
           </p>
           <div className="">
             <div className=" mt-5 space-y-5">
-            <div className="relative">
+            <div onClick={handleOpen} className="relative">
               <input
                 className="peer hidden"
                 id="radio_5"
@@ -318,6 +367,76 @@ if(error){
               </label>
            
             </div>
+            <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <img
+                  className="w-20 object-contain"
+                  src="data:image/png;base64,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"
+
+                  alt=""
+                />
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <div className="antialiased bg-slate-200/10 ">
+      <div className="max-w-lg mx-auto my-10 bg-white p-5 rounded-xl shadow-lg shadow-slate-300">
+        <h1 className="lg:text-4xl md:text-3xl text-2xl font-medium ">Lipa na M-pesa</h1>
+        <p className="text-slate-500 mt-1">Fill up the form with no. starting 07 xx xxx xxx to propt the stk-push</p>
+
+        <div className="my-10">
+          <div className="flex flex-col space-y-5">
+            <label htmlFor="email">
+              <p className="font-medium text-slate-700 pb-2">Mpesa Phone No.</p>
+              <input
+                id="phone"
+                name="phone"
+                required
+                type="number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                placeholder="07xx xxx xxx"
+              />
+            </label>
+
+            { isMpesaLoading ? (<div  className="w-full py-3 font-medium text-white bg-black hover:bg-black rounded-lg border-black hover:shadow inline-flex space-x-2 items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                />
+              </svg>
+
+              <span>Please wait...</span>
+            </div>) : (<button onClick={handleMpesaPayment} className="w-full py-3 font-medium text-white bg-green-700 hover:bg-slate-800 rounded-lg border-slate-800 hover:shadow inline-flex space-x-2 items-center justify-center">
+            
+
+              <span>Pay </span>
+            </button>)} 
+
+           
+          </div>
+        </div>
+      </div>
+    </div>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
             
              <div className="relative">
               <input
