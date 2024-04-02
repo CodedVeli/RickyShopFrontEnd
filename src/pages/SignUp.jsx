@@ -1,8 +1,66 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PiAddressBookThin } from "react-icons/pi";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaCity } from "react-icons/fa";
+import axios from "axios";
+import toast from "react-hot-toast";
+
 function SignUp() {
+
+  const navigate = useNavigate()
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword]= useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [address, setAddress] = useState("")
+    const [city, setCity] = useState("")
+    const [phone, setPhone] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    const handleSignup = async (event) => {
+      console.log('clicked')
+      setLoading(true)
+      event.preventDefault();
+      if (!password) {
+        toast.error("Password cannot be empty");
+        return;
+    }
+
+    if (password.length < 8) {
+        toast.error("Password should be at least 8 characters");
+        return;
+    }
+
+
+    if (password !== confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
+    }
+  
+      try {
+          
+          const response = await axios.post('http://127.0.0.1:5000/auth/register', { name, email, password, address, city, phone});
+          toast.success(` ${response.data.message}`);
+          setName("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          setAddress("");
+          setCity("");
+          setPhone("");
+          navigate('/signin');
+      } catch (error) {
+
+          toast.error(` ${error.response.data.message}`);
+      } finally {
+          setLoading(false)
+      }
+  };
   return (
-    <section className="bg-white ">
-      <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
-        <form className="w-full max-w-md">
+    <section  className="bg-white  ">
+      <div className="container flex items-center justify-center min-h-screen px-6 mx-auto shadow-xl">
+        <form onSubmit={handleSignup} className="w-full max-w-md">
           <div className="flex justify-center mx-auto">
             <img className="w-auto h-7 sm:h-8" src="/RickyShop.png" alt="" />
           </div>
@@ -10,12 +68,11 @@ function SignUp() {
           <div className="flex items-center justify-center mt-6">
             
 
-            <a
-              href="#"
+            <p
               className="w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2 border-black "
             >
               sign up
-            </a>
+            </p>
           </div>
 
           <div className="relative flex items-center mt-8">
@@ -39,7 +96,10 @@ function SignUp() {
             <input
               type="text"
               className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11   focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-              placeholder="Username"
+              placeholder="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
@@ -67,6 +127,9 @@ function SignUp() {
               type="email"
               className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11  focus:border-blue-400  focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -92,6 +155,9 @@ function SignUp() {
               type="password"
               className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -117,21 +183,77 @@ function SignUp() {
               type="password"
               className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </div>
 
+          <div className="relative flex items-center mt-4">
+            <span className="absolute">
+            <PiAddressBookThin  className="w-6 h-6 mx-3 text-gray-300 " />
+
+            </span>
+
+            <input
+              type="address"
+              className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="relative flex items-center mt-4">
+            <span className="absolute">
+            <FaCity  className="w-6 h-6 mx-3 text-gray-300 " />
+            
+            </span>
+
+            <input
+              type="city"
+              className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="relative flex items-center mt-4">
+            <span className="absolute">
+            <FaPhoneAlt className="w-4 h-4 mx-3 text-gray-300 " />
+            
+            </span>
+
+            <input
+              type="phone"
+              className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+          </div>
+
+
+
+
           <div className="mt-6">
-            <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-lg  focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+           {loading ? ( <div  className="w-full px-6 py-3 text-sm font-medium tracking-wide text-center text-white  transition-colors duration-300 transform bg-black rounded-lg  focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+              Signing you up...
+            </div>) : ( <button type="submit" className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-lg  focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               Sign Up
-            </button>
+            </button>)}
 
             <div className="mt-6 text-center ">
-              <a
-                href="#"
+              <button
+                onClick={() => navigate("/signin")}
                 className="text-sm text-black hover:underline "
               >
                 Already have an account?
-              </a>
+              </button>
             </div>
           </div>
         </form>

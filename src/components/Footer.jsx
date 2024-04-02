@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { FaInstagramSquare } from "react-icons/fa";
 
 function Footer() {
   return (
     <footer className="bg-black py-8 px-10 font-[sans-serif]">
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       <div className="lg:flex lg:items-center">
-        <a href="javascript:void(0)">
+        <a>
           <img
-            src="/RickyShop.png"
+            src="/Ricky-Shopblack.png"
             alt="logo"
             className="w-48"
           />
@@ -16,7 +17,7 @@ function Footer() {
       <div className="lg:flex lg:items-center">
         <ul className="flex space-x-6">
           <li>
-            <a href="javascript:void(0)">
+            <a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="fill-gray-300 hover:fill-white w-7 h-7"
@@ -31,22 +32,10 @@ function Footer() {
             </a>
           </li>
           <li>
-            <a href="javascript:void(0)">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="fill-gray-300 hover:fill-white w-7 h-7"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M21 5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5zm-2.5 8.2v5.3h-2.79v-4.93a1.4 1.4 0 0 0-1.4-1.4c-.77 0-1.39.63-1.39 1.4v4.93h-2.79v-8.37h2.79v1.11c.48-.78 1.47-1.3 2.32-1.3 1.8 0 3.26 1.46 3.26 3.26zM6.88 8.56a1.686 1.686 0 0 0 0-3.37 1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68zm1.39 1.57v8.37H5.5v-8.37h2.77z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
+          <FaInstagramSquare className='fill-gray-300 hover:fill-white w-7 h-7' />
           </li>
           <li>
-            <a href="javascript:void(0)">
+            <a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -64,26 +53,26 @@ function Footer() {
         <ul className="space-y-4">
           <li>
             <a
-              href="javascript:void(0)"
+             
               className="text-gray-300 hover:text-white text-sm"
             >
-              Email
+              Email: shopricky001@gmail.com
             </a>
           </li>
           <li>
             <a
-              href="javascript:void(0)"
+             
               className="text-gray-300 hover:text-white text-sm"
             >
-              Phone
+              Phone: 0700272040
             </a>
           </li>
           <li>
             <a
-              href="javascript:void(0)"
+             
               className="text-gray-300 hover:text-white text-sm"
             >
-              Address
+              Address: Just one call away
             </a>
           </li>
         </ul>
@@ -93,7 +82,7 @@ function Footer() {
         <ul className="space-y-4">
           <li>
             <a
-              href="javascript:void(0)"
+             
               className="text-gray-300 hover:text-white text-sm"
             >
               About Us
@@ -101,7 +90,7 @@ function Footer() {
           </li>
           <li>
             <a
-              href="javascript:void(0)"
+             
               className="text-gray-300 hover:text-white text-sm"
             >
               Terms &amp; Conditions
@@ -109,7 +98,7 @@ function Footer() {
           </li>
           <li>
             <a
-              href="javascript:void(0)"
+             
               className="text-gray-300 hover:text-white text-sm"
             >
               Privacy Policy
@@ -120,14 +109,25 @@ function Footer() {
     </div>
     <p className="text-gray-300 text-sm mt-8">
       © 2024
-      <a
-        href="https://readymadeui.com/"
-        target="_blank"
+      <p
+        
         className="hover:underline mx-1"
       >
         Ricky's Shop
-      </a>
+      </p>
       All Rights Reserved.
+    </p>
+    {/* programmer credits */}
+    <p className="text-gray-300 text-sm mt-8">
+      Developed by
+      <a
+        href="https://www.linkedin.com/in/eric-kibuchi-b48736239"
+        target="_blank"
+        rel="noreferrer"
+        className="hover:underline mx-1"
+      >
+        Eric Kibuchi
+      </a>
     </p>
   </footer>
   )

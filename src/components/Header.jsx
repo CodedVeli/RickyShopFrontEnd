@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import {  useAuth } from '../utils/Auth';
+import toast from "react-hot-toast";
 
-const Navbar = () => {
+const Navbar = ({accessToken}) => {
+
+  
   const [openNavbar, setOpenNavbar] = useState(false);
   const toggleNavbar = () => {
     setOpenNavbar((openNavbar) => !openNavbar);
@@ -12,6 +16,35 @@ const Navbar = () => {
   };
 
   const { cartTotalQuantity  } = useSelector((state) => state.cart);
+
+  const { logout, isAuthenticated } = useAuth()
+
+  const navigate = useNavigate();
+
+
+  const handleLogout = async () => {
+    const response = await fetch('http://127.0.0.1:5000/auth/logout', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    try {
+      if (response.ok) {
+        logout()      
+        navigate('/');
+        toast.success('Logged out successfully!');
+
+  
+      }
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  }
+
+  
 
   return (
     <>
@@ -105,7 +138,14 @@ const Navbar = () => {
                   </svg>
                 </Link>
               </div>
-              <Link
+              
+              {isAuthenticated ? (<button
+               onClick={handleLogout}                              
+                className="px-5 py-2.5 rounded-md bg-black text-white flex justify-center "
+              >
+                Logout
+              </button>):(<div className="flex flex-col sm:flex-row sm:items-center gap-4  lg:min-w-max mt-10 lg:mt-0">
+                <Link
                 to="/signin"
                 className="px-5 py-2.5 rounded-md text-black underline flex justify-center"
               >
@@ -117,6 +157,7 @@ const Navbar = () => {
               >
                 Signup
               </Link>
+              </div>) }
             </div>
           </div>
           <div className="flex items-center lg:hidden gap-x-4">
