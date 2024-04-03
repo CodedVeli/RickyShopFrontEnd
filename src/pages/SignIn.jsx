@@ -19,7 +19,7 @@ function SignIn() {
     console.log("clicked");
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/auth/login",
+        "https://ricky-shop-server-3.onrender.com/auth/login",
         {
           email,
           password,

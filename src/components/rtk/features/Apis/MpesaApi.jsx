@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const mpesaApi = createApi({
     reducerPath: 'mpesaApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:5000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://ricky-shop-server-3.onrender.com' }),
     endpoints: (builder) => ({
         getAccessToken: builder.query({
             query: () => '/mpesa/get_access_token',

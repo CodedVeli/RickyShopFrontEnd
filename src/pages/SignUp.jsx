@@ -40,7 +40,7 @@ function SignUp() {
   
       try {
           
-          const response = await axios.post('http://127.0.0.1:5000/auth/register', { name, email, password, address, city, phone});
+          const response = await axios.post('https://ricky-shop-server-3.onrender.com/auth/register', { name, email, password, address, city, phone});
           toast.success(` ${response.data.message}`);
           setName("");
           setEmail("");

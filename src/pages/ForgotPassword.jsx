@@ -15,7 +15,7 @@ function ForgotPassword() {
         setLoading(true);
         try {
             const response = await axios.post(
-                "http://127.0.0.1:5000/auth/forgot_password", { email }
+                "https://ricky-shop-server-3.onrender.com/auth/forgot_password", { email }
             );
             toast.success(`${response.data.message}`);
             setEmail("");

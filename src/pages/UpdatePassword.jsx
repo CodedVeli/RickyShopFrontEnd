@@ -41,7 +41,7 @@ function UpdatePassword({accessToken}) {
             return;
         }
         try {
-            const response = await axios.patch('http://localhost:5000/auth/update_password', { password, email },
+            const response = await axios.patch('https://ricky-shop-server-3.onrender.com/auth/update_password', { password, email },
             { headers: { Authorization: `Bearer ${accessToken}` } }
 
             );

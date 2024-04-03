@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const orderApi = createApi({
     reducerPath: 'orderApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:5000' }),
+    baseQuery: fetchBaseQuery({ baseUrl: 'https://ricky-shop-server-3.onrender.com' }),
     endpoints: (builder) => ({
         getAllOrders: builder.query({
             query: () => '/orders',
