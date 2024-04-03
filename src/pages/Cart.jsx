@@ -2,6 +2,7 @@ import { useState, useEffect,useCallback } from "react";
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart, clearCartItem } from "../components/rtk/features/CartSlice";
+import Footer from "../components/Footer";
 
 function Cart() {
     const navigate = useNavigate()
@@ -28,6 +29,7 @@ function Cart() {
 
     const accumulativeTotal = Number(totalAmount) + Number(shipping);
   return (
+    <>
     <section className="h-screen bg-gray-100 py-24 sm:py-24 lg:py-24">
   <div className="mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex items-center justify-center">
@@ -107,7 +109,10 @@ function Cart() {
       </div>
     </div>
   </div>
+ 
 </section>
+<Footer/>
+</>
 
   )
 }
