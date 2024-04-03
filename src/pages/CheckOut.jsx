@@ -108,14 +108,14 @@ function CheckOut({ accessToken }) {
   }
   console.log('Delivery:',deliveryMethod)
 
-if(error){
-  toast.error(`${error.message}`)
-} else if (data) {
-  toast.success(`${data.message}`)
-}
+
 
 useEffect(() => {
-  if (mpesaData) {
+  if(error){
+    toast.error(`${error.message}`)
+  } else if (data) {
+    toast.success(`${data.message}`)
+  }if (mpesaData) {
     toast.success(`${mpesaData.message}`);
     handleClose();
     handleSubmit();
