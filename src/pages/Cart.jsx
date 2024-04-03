@@ -111,7 +111,10 @@ function Cart() {
   </div>
  
 </section>
+<footer >
 <Footer/>
+
+</footer>
 </>
 
   )
