@@ -30,9 +30,9 @@ function Categories() {
   }
   return (
     <>
-    <section className=" mt-20">
+    <section className=" mt-20 ">
 
-  <div className="mx-auto max-w-md sm:max-w-lg md:max-w-screen-xl">
+  <div className="mx-auto max-w-md sm:max-w-lg md:max-w-screen-xl h-screen">
     <div className="px-4 py-8 md:px-6 md:py-12 lg:px-20">
       <h1 className="text-center text-3xl font-semibold text-gray-800 lg:text-4xl">Our Categories</h1>
 
