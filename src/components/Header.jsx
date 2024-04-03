@@ -23,7 +23,7 @@ const Navbar = ({accessToken}) => {
 
 
   const handleLogout = async () => {
-    const response = await fetch('http://127.0.0.1:5000/auth/logout', {
+    const response = await fetch('https://ricky-shop-server-3.onrender.com/auth/logout', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
