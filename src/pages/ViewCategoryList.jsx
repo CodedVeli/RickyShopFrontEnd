@@ -4,6 +4,8 @@ import Skeleton from "../components/Skeleton";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../components/rtk/features/CartSlice";
+import Footer from "../components/Footer";
+
 
 function ViewCategoryList() {
   const { category } = useParams();
@@ -62,6 +64,7 @@ function ViewCategoryList() {
     ));
   }
   return (
+    <>
     <div>
        <div className="mx-auto max-w-screen-xl px-4  py-16 mt-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-md text-center">
@@ -73,6 +76,8 @@ function ViewCategoryList() {
       </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
 

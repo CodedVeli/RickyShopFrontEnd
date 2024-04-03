@@ -58,7 +58,7 @@ function SignUp() {
       }
   };
   return (
-    <section  className="bg-white  ">
+    <section  className="bg-white   mt-5 ">
       <div className="container flex items-center justify-center min-h-screen px-6 mx-auto shadow-xl">
         <form onSubmit={handleSignup} className="w-full max-w-md">
           <div className="flex justify-center mx-auto">

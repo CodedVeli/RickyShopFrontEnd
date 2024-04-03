@@ -2,6 +2,8 @@ import React from 'react'
 import { useGetAllCategoriesQuery } from '../components/rtk/features/Apis/CategoryApi';
 import Skeleton from '../components/Skeleton';
 import { Link } from 'react-router-dom';
+import Footer from "../components/Footer";
+
 
 
 function Categories() {
@@ -27,6 +29,7 @@ function Categories() {
       </div>))
   }
   return (
+    <>
     <section className=" mt-20">
 
   <div className="mx-auto max-w-md sm:max-w-lg md:max-w-screen-xl">
@@ -73,6 +76,8 @@ function Categories() {
     </div>
   </div>
 </section>
+<Footer/>
+</>
 
   )
 }

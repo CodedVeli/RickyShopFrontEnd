@@ -4,6 +4,8 @@ import {  Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useGetProductQuery } from '../components/rtk/features/Apis/ProductApi';
 import { addToCart } from '../components/rtk/features/CartSlice';
+import Footer from "../components/Footer";
+
 function ProductDetail() {
 
   const { id } = useParams()
@@ -191,11 +193,13 @@ function ProductDetail() {
     )
   }
   return (
-
+    <>
     <section className=" lg:mt-5 md:mt-5 mt-20 py-12  sm:py-16"> 
     {productDetails}
     
   </section>
+  <Footer/>
+  </>
   
   )
 }
