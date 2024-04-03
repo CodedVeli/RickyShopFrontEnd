@@ -113,7 +113,7 @@ function Footer() {
         
         className="hover:underline mx-1"
       >
-        Ricky's Shop
+        Ricky`s Shop
       </p>
       All Rights Reserved.
     </p>

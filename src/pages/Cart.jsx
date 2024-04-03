@@ -30,7 +30,7 @@ function Cart() {
     const accumulativeTotal = Number(totalAmount) + Number(shipping);
   return (
     <>
-    <section className="h-screen bg-gray-100 py-24 sm:py-24 lg:py-24">
+    <section className=" bg-gray-100 py-24 sm:py-24 lg:py-24">
   <div className="mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex items-center justify-center">
       <h1 className="text-2xl font-semibold text-gray-900">Your Cart</h1>
@@ -41,7 +41,7 @@ function Cart() {
         <div className="px-4 py-6 sm:px-8 sm:py-10">
           <div className="flow-root">
             <ul className="-my-8">
-             {cartItems.length === 0 ? <p className="text-center text-gray-400">Cart is empty</p> : cartItems.map((item) => (
+             {cartItems.length === 0 ? <div className="text-center text-gray-400">Cart is empty</div> : cartItems.map((item) => (
              
               <li key={item.id} className="flex flex-col space-y-3 py-6 text-left sm:flex-row sm:space-x-5 sm:space-y-0">
               <div className="shrink-0">
@@ -51,12 +51,12 @@ function Cart() {
               <div className="relative flex flex-1 flex-col justify-between">
                 <div className="sm:col-gap-5 sm:grid sm:grid-cols-2">
                   <div className="pr-8 sm:pr-5">
-                    <p className="text-base font-semibold text-gray-900">{item.title}</p>
+                    <div className="text-base font-semibold text-gray-900">{item.title}</div>
                     {/* <p className="mx-0 mt-1 mb-0 text-sm text-gray-400">36EU - 4US</p> */}
                   </div>
 
                   <div className="mt-4 flex items-end justify-between sm:mt-0 sm:items-start sm:justify-end">
-                    <p className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">${Number(item.totalPrice.toFixed(2))}</p>
+                    <div className="shrink-0 w-20 text-base font-semibold text-gray-900 sm:order-2 sm:ml-8 sm:text-right">${Number(item.totalPrice.toFixed(2))}</div>
 
                     <div className="sm:order-1">
                       <div className="mx-auto flex h-8 items-stretch text-gray-600">
@@ -111,10 +111,8 @@ function Cart() {
   </div>
  
 </section>
-<footer >
 <Footer/>
 
-</footer>
 </>
 
   )
