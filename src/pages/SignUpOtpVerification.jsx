@@ -27,7 +27,7 @@ function SignUpOtpVerification() {
     .map(el => el.value)
     .join('');
       try {
-        const response = await axios.post("http://127.0.0.1:5000/auth/validate_signup_otp", { otp, email });
+        const response = await axios.post("https://ricky-shop-server-3.onrender.com/auth/validate_signup_otp", { otp, email });
         if (response.status === 201) {
           toast.success(`${response.data.message}`);
           const access_token = response.data.access_token;
