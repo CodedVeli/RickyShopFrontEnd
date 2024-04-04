@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useAddOrderMutation } from "../components/rtk/features/Apis/OrderApi";
 import { useLipaNaMpesaMutation } from "../components/rtk/features/Apis/MpesaApi";
 import {jwtDecode} from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -32,6 +33,7 @@ function CheckOut({ accessToken }) {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [open, setOpen] = useState(false);
   const [phone, setPhone] = useState('');
+  const navigate = useNavigate();
   const [addOrder, { isLoading, error, data }] = useAddOrderMutation();
   const [lipaNaMpesa, { isLoading: isMpesaLoading, error: mpesaError, data: mpesaData }] = useLipaNaMpesaMutation();
 
@@ -119,6 +121,7 @@ useEffect(() => {
     toast.success(`${mpesaData.message}`);
     handleClose();
     handleSubmit();
+    navigate('/')
   }
 }, [mpesaData]);
 
