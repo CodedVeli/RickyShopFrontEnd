@@ -32,6 +32,7 @@ function SignUpOtpVerification() {
           toast.success(`${response.data.message}`);
           const access_token = response.data.access_token;
           login(access_token);
+        Cookies.remove("user_email_signup");
           navigate("/");
         }
       } catch (error) {
