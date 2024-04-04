@@ -18,6 +18,7 @@ import ProtectedRoutes from './utils/ProtectedRoutes';
 import ForgotPassword from './pages/ForgotPassword';
 import OtpVerification from './pages/OtpVerification';
 import UpdatePassword from './pages/UpdatePassword';
+import SignUpOtpVerification from './pages/SignUpOtpVerification';
 
 function App() {
   const [accessToken, setAccessToken] = useState("")
@@ -45,6 +46,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetail/>}/>
           <Route path="/forgotpassword" element={<ForgotPassword/>}/>
           <Route path="otp_verification" element={<OtpVerification/>}/>
+          <Route path="/signupotpverification" element={<SignUpOtpVerification/>}/>          
         </Routes>
      <Toaster
       toastOptions={

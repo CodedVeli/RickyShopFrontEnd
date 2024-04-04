@@ -5,6 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FaCity } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 function SignUp() {
 
@@ -40,7 +41,7 @@ function SignUp() {
   
       try {
           
-          const response = await axios.post('https://ricky-shop-server-3.onrender.com/auth/register', { name, email, password, address, city, phone});
+          const response = await axios.post('http://127.0.0.1:5000/auth/register', { name, email, password, address, city, phone});
           toast.success(` ${response.data.message}`);
           setName("");
           setEmail("");
@@ -49,7 +50,8 @@ function SignUp() {
           setAddress("");
           setCity("");
           setPhone("");
-          navigate('/signin');
+          Cookies.set("user_email_signup", email, { expires: 1, path: "/", sameSite: 'None', secure: true });  
+          navigate('/signupotpverification');
       } catch (error) {
 
           toast.error(` ${error.response.data.message}`);

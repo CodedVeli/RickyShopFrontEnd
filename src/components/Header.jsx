@@ -58,9 +58,14 @@ const Navbar = ({accessToken}) => {
         }`}
       />
       <header className="fixed left-0 bg-white shadow-md top-0 w-full flex items-center h-20 border-b  border-b-gray-800  z-40 ">
-        <nav className="relative mx-auto lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 flex gap-x-5 justify-between items-center">
-          <div className="flex items-center min-w-max">
+        <nav
+        
+         className="relative mx-auto lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 flex gap-x-5 justify-between items-center">
+          <div
+          
+           className="flex items-center min-w-max">
             <Link
+            
               to="/"
               className="text-xl font-semibold text-gray-800 dark:text-gray-200"
             >
@@ -78,7 +83,10 @@ const Navbar = ({accessToken}) => {
                     }
                 `}
           >
-            <ul className="flex flex-col lg:flex-row gap-6 lg:items-center text-gray-500 lg:w-full lg:justify-center">
+            <ul
+             onClick={() => {
+              closeNavbar();
+            }} className="flex flex-col lg:flex-row gap-6 lg:items-center text-gray-500 lg:w-full lg:justify-center">
               <li>
                 <Link
                   to="/"

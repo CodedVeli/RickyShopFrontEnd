@@ -19,7 +19,7 @@ function SignIn() {
     console.log("clicked");
     try {
       const response = await axios.post(
-        "https://ricky-shop-server-3.onrender.com/auth/login",
+        "http://127.0.0.1:5000/auth/login",
         {
           email,
           password,
@@ -36,9 +36,17 @@ function SignIn() {
         navigate("/");
       }
     } catch (error) {
-      toast.error(
-        ` ${"Invalid email or password"}`
-      );
+      if (error.response) {
+        
+        toast.error(`${error.response.data.message}`);
+      } else if (error.request) {
+        
+        console.log(error.request);
+      } else {
+        
+        toast.error(`Error: ${error.message}`);
+      }
+      
     } finally {
       setLoading(false);
     }
