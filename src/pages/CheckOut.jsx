@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import Footer from '../components/Footer'
+import Footer from '../components/Footer';
+
 
 const style = {
   position: 'absolute',
@@ -34,7 +35,7 @@ function CheckOut({ accessToken }) {
   const [open, setOpen] = useState(false);
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
-  const [addOrder, { isLoading, error, data }] = useAddOrderMutation();
+  const [addOrder, { isLoading: isLoadingOrder, error: orderError, data: orderData }] = useAddOrderMutation();
   const [lipaNaMpesa, { isLoading: isMpesaLoading, error: mpesaError, data: mpesaData }] = useLipaNaMpesaMutation();
 
 
@@ -54,7 +55,7 @@ function CheckOut({ accessToken }) {
       setUserId(decodedToken.sub);
     }
   }, [accessToken]);
-  console.log('data:',data)
+  // console.log('data:',orderData)
 
   const totalAmount = Number(cartTotalAmount).toFixed(2);
   const calculateShipping = useCallback(() => {
@@ -73,6 +74,9 @@ function CheckOut({ accessToken }) {
     calculateShipping();
   }, [calculateShipping]);
   const accumulativeTotal = Number(totalAmount) + Number(shipping);
+  const totalAccumulative = Math.trunc(accumulativeTotal)
+
+  // console.log(totalAccumulative)
 
   const handleDeliveryChange = (e) => {
     setDeliveryMethod(e.target.value);
@@ -87,7 +91,7 @@ function CheckOut({ accessToken }) {
     e.preventDefault();
     const payload = {
       phone_number: phone.startsWith('0') ? phone.substring(1) : phone,
-      amount: accumulativeTotal,
+      amount: totalAccumulative,
     };
     lipaNaMpesa(payload);
   };
@@ -107,25 +111,35 @@ function CheckOut({ accessToken }) {
       shipping_cost: shipping,
     };
     addOrder({order, accessToken});
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('cartTotalAmount');
+    localStorage.removeItem('cartTotalItems');
   }
-  console.log('Delivery:',deliveryMethod)
+  // console.log('Delivery:',deliveryMethod)
 
 
 
 useEffect(() => {
-  if(error){
-    toast.error(`${error.message}`)
-  } else if (data) {
-    toast.success(`${data.message}`)
-  }if (mpesaData) {
-    toast.success(`${mpesaData.message}`);
+  if(orderData){
+    toast.success(`${orderData}`)
+  } else if (orderError) {
+    toast.error(`${orderError}`)
+  } else if  (mpesaData) {
+    toast.success(`${mpesaData}`);
     handleClose();
     handleSubmit();
     navigate('/')
+  } else if (mpesaError) {
+    toast.error(`${mpesaError}`)
   }
-}, [mpesaData]);
+}, [mpesaData, orderData, orderError, mpesaError]);
 
-  console.log(mpesaError)
+
+// console.log('mpesaData:',mpesaData)
+// console.log('orderData:',orderData)
+// console.log('orderError:',orderError)
+// console.log('mpesaError:',mpesaError)
+
 
 
 
@@ -479,7 +493,7 @@ useEffect(() => {
               </p>
             </div>
           </div>
-          {isLoading ? (<div className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
+          {isLoadingOrder ? (<div className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
             Placing Order...
           </div>):(<button type="submit" className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
             Place Order
