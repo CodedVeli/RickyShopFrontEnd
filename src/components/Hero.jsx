@@ -7,14 +7,13 @@ function Hero() {
       <div className="w-full lg:w-1/2">
         <div className="lg:max-w-lg">
           <h1 className="text-3xl font-semibold text-gray-800/85  lg:text-4xl">
-            Best place to choose <br /> your{" "}
-            <span className=" text-[#BF9B30] font-bold ">clothes</span>
+            You need it we've got it <br /> {" "}
+            <span className=" text-[#BF9B30] font-bold ">Easy shopping</span>
           </h1>
 
           <p className="mt-3 text-gray-400 ">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro
-            beatae error laborum ab amet sunt recusandae? Reiciendis natus
-            perspiciatis optio.
+            We have a wide range of products that you can choose from. We have
+            the best quality products that you can find in the market. We also do gifting for all occasions.
           </p>
 
           <a href="#" className="group mt-3  flex w-44 cursor-pointer select-none items-center justify-center rounded-md bg-black px-6 py-2 text-white transition">

@@ -86,7 +86,7 @@ function CheckOut({ accessToken }) {
   const handleMpesaPayment = (e) => {
     e.preventDefault();
     const payload = {
-      phone_number: phone,
+      phone_number: phone.startsWith('0') ? phone.substring(1) : phone,
       amount: accumulativeTotal,
     };
     lipaNaMpesa(payload);
