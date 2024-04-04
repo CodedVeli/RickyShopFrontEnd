@@ -163,7 +163,7 @@ function SignUp() {
             />
           </div>
 
-          <div className="relative flex items-center mt-4">
+         {/* <div className="relative flex items-center mt-4">
             <span className="absolute">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@ function SignUp() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-          </div>
+          </div>*/}
 
           <div className="relative flex items-center mt-4">
             <span className="absolute">
