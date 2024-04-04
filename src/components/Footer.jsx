@@ -85,7 +85,7 @@ function Footer() {
              
               className="text-gray-300 hover:text-white text-sm"
             >
-              About Us
+              {/* About Us */}
             </a>
           </li>
           <li>
