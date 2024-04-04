@@ -103,22 +103,22 @@ const Navbar = ({accessToken}) => {
                   Categories
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/about"
                   className="relative py-2.5 duration-300 ease-linear hover:text-black after:absolute after:w-full after:left-0 after:bottom-0 after:h-px after:rounded-md after:origin-left after:ease-linear after:duration-300 after:scale-x-0 hover:after:scale-100 after:bg-black"
                 >
                   About
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link
                   href="/contact"
                   className="relative py-2.5 duration-300 ease-linear hover:text-black after:absolute after:w-full after:left-0 after:bottom-0 after:h-px after:rounded-md after:origin-left after:ease-linear after:duration-300 after:scale-x-0 hover:after:scale-100 after:bg-black"
                 >
                   Contact
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4  lg:min-w-max mt-10 lg:mt-0">
               <div className="hidden lg:flex lg:items-center ">
