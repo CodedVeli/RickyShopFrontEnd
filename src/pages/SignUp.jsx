@@ -23,7 +23,7 @@ function SignUp() {
       console.log('clicked')
       setLoading(true)
       event.preventDefault();
-      if (!password) {
+  {/*    if (!password) {
         toast.error("Password cannot be empty");
         return;
     }
@@ -37,7 +37,7 @@ function SignUp() {
     if (password !== confirmPassword) {
         toast.error("Passwords do not match");
         return;
-    }
+    }*/}
   
       try {
           
