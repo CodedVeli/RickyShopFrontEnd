@@ -90,7 +90,7 @@ function CheckOut({ accessToken }) {
   const handleMpesaPayment = (e) => {
     e.preventDefault();
     const payload = {
-      phone_number: phone.startsWith('0') ? phone.substring(1) : phone,
+      phone_number: phone,
       amount: totalAccumulative,
     };
     lipaNaMpesa(payload);
@@ -125,10 +125,12 @@ useEffect(() => {
   } else if (orderError) {
     toast.error(`${orderError}`)
   } else if  (mpesaData) {
-    toast.success(`${mpesaData}`);
+    toast.success(`${mpesaData.message}`);
     handleClose();
     handleSubmit();
-    navigate('/')
+   setTimeout(() => {
+    navigate('/');
+    }, 10000);
   } else if (mpesaError) {
     toast.error(`${mpesaError}`)
   }
@@ -139,6 +141,8 @@ useEffect(() => {
 // console.log('orderData:',orderData)
 // console.log('orderError:',orderError)
 // console.log('mpesaError:',mpesaError)
+// console.log('mpesaError full:',mpesaError)
+
 
 
 
