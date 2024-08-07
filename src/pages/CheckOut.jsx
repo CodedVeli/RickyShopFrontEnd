@@ -3,10 +3,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
 import { useAddOrderMutation } from "../components/rtk/features/Apis/OrderApi";
-import { useLipaNaMpesaMutation } from "../components/rtk/features/Apis/MpesaApi";
+import { useLipaNaMpesaMutation, useHandleCallbackQuery } from "../components/rtk/features/Apis/MpesaApi";
 import {jwtDecode} from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -33,10 +34,13 @@ function CheckOut({ accessToken }) {
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [open, setOpen] = useState(false);
+  const [callbackData, setCallbackData] = useState(null);
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
   const [addOrder, { isLoading: isLoadingOrder, error: orderError, data: orderData }] = useAddOrderMutation();
   const [lipaNaMpesa, { isLoading: isMpesaLoading, error: mpesaError, data: mpesaData }] = useLipaNaMpesaMutation();
+  // const { data: callbackData, refetch: fetchCallback } = useHandleCallbackQuery();
+
 
 
   const handleOpen = () => {
@@ -87,13 +91,14 @@ function CheckOut({ accessToken }) {
     setPaymentMethod(e.target.value)
   }
 
-  const handleMpesaPayment = (e) => {
+  const handleMpesaPayment = async (e) => {
     e.preventDefault();
     const payload = {
       phone_number: phone,
       amount: totalAccumulative,
     };
-    lipaNaMpesa(payload);
+    await lipaNaMpesa(payload);
+    // await fetchCallback();
   };
 
 
@@ -119,31 +124,83 @@ function CheckOut({ accessToken }) {
 
 
 
-useEffect(() => {
-  if(orderData){
-    toast.success(`${orderData}`)
-  } else if (orderError) {
-    toast.error(`${orderError}`)
-  } else if  (mpesaData) {
-    toast.success(`${mpesaData.message}`);
-    handleClose();
-    handleSubmit();
-   setTimeout(() => {
-    navigate('/');
-    }, 10000);
-  } else if (mpesaError) {
-    toast.error(`${mpesaError}`)
-  }
-}, [mpesaData, orderData, orderError, mpesaError]);
 
+  useEffect(() => {
+    if (orderData) {
+      toast.success(`${orderData}`);
+    } else if (orderError) {
+      toast.error(`${orderError}`);
+    } else if (callbackData) {
+      if (callbackData.ResultCode === 0) {
+        toast.success('Payment successful');
+        handleClose();
+        handleSubmit();
+        setTimeout(() => {
+          navigate('/');
+        }, 10000);
+      } else {
+        toast.error(`Payment failed: ${callbackData.ResultDesc}`);
+      }
+    } else if (mpesaError) {
+      toast.error(`${mpesaError}`);
+    }
+  }, [mpesaData, orderData, orderError, mpesaError, callbackData]);
 
+  
 // console.log('mpesaData:',mpesaData)
 // console.log('orderData:',orderData)
 // console.log('orderError:',orderError)
 // console.log('mpesaError:',mpesaError)
 // console.log('mpesaError full:',mpesaError)
 
+useEffect(() => {
+  if (orderData) {
+    toast.success(`${orderData}`);
+  } else if (orderError) {
+    toast.error(`${orderError}`);
+  } else if (mpesaData) {
+    toast.success(`${mpesaData.message}`);
+    handleClose();
+    handleSubmit();
+    setTimeout(() => {
+      navigate('/');
+    }, 10000);
+  } else if (mpesaError) {
+    toast.error(`${mpesaError}`);
+  }
+}, [mpesaData, orderData, orderError, mpesaError]);
 
+
+// useEffect(() => {
+//   if (callbackData) {
+//     console.log('Callback Data:', callbackData);
+//     // Handle the callback data here
+//     if (callbackData.ResultCode === 0) {
+//       toast.success('Payment successful!');
+//       handleSubmit();
+//     } else {
+//       toast.error(`Payment failed: ${callbackData.ResultDesc}`);
+//     }
+//   }
+// }, [callbackData]);
+
+useEffect(() => {
+  const eventSource = new EventSource('https://ricky-shop-server-3.onrender.com/subscribe');
+  eventSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log('Callback Data:', data);
+    // Handle the callback data here
+    if (data.ResultCode === 0) {
+      toast.success('Payment successful!');
+      handleSubmit();
+    } else {
+      toast.error(`Payment failed: ${data.ResultDesc}`);
+    }
+  };
+  return () => {
+    eventSource.close();
+  };
+}, []);
 
 
 
